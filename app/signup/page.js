@@ -79,7 +79,7 @@ const SignupPage = () => {
                 Sign Up with Google
               </button>
               <button
-                className="bg-black text-white  py-2 px-2 rounded-full border border-white hover:underline"
+                className="bg-black text-white py-2 px-2 rounded-full border border-white hover:underline"
                 onClick={signInWithGitHub}
               >
                 <img
@@ -89,6 +89,14 @@ const SignupPage = () => {
                 />
                 Sign Up with GitHub
               </button>
+              <div className="flex items-center justify-center mt-4">
+                <p className="text-gray-400 text-sm">
+                  Already have an account?{" "}
+                  <a href="/login" className="text-blue-500 hover:underline">
+                    Log in here.
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
