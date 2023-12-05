@@ -1,15 +1,15 @@
-// pages/signup.js
+// pages/login.js
 "use client";
 import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
 
-const SignupPage = () => {
-  const { emailPasswordSignUp, googleSignIn, githubSignIn } = UserAuth();
+const LoginPage = () => {
+  const { emailPasswordSignIn, googleSignIn, githubSignIn } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignupWithEmailPassword = () => {
-    emailPasswordSignUp(email, password);
+  const handleLoginWithEmailPassword = () => {
+    emailPasswordSignIn(email, password);
   };
 
   const signInWithGoogle = async () => {
@@ -31,11 +31,20 @@ const SignupPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 w-full max-w-screen-xl h-full">
-        {/* Left Side (Signup Form) */}
+        {/* Left Side (Background Image) */}
+        <div className="hidden lg:block bg-cover bg-center h-full ">
+          <img
+            src="../../OIG2.jpeg"
+            alt=""
+            className="h-full w-full object-cover rounded-md"
+          />
+        </div>
+
+        {/* Right Side (Login Form) */}
         <div className="lg:col-span-1 h-full">
           <div className="bg-gray-800 p-8 rounded shadow-md h-full">
-            <h2 className="text-3xl font-semibold mb-4 text-center">Sign Up</h2>
-            <div className="mb-4">
+            <h2 className="text-3xl font-semibold mb-4 text-center">Log In</h2>
+            <div className="mb-4 ">
               <label htmlFor="email" className="block text-sm font-medium mb-3">
                 Email
               </label>
@@ -61,10 +70,10 @@ const SignupPage = () => {
               />
             </div>
             <button
-              className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mb-6"
-              onClick={handleSignupWithEmailPassword}
+              className="w-full bg-blue-500 text-white py-3  rounded-3xl hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mb-6"
+              onClick={handleLoginWithEmailPassword}
             >
-              Sign Up
+              Log In
             </button>
             <div className="flex flex-col space-y-4">
               <button
@@ -76,7 +85,7 @@ const SignupPage = () => {
                   src="/google.png"
                   alt="Google Icon"
                 />
-                Sign Up with Google
+                Log In with Google
               </button>
               <button
                 className="bg-black text-white py-3 px-2 rounded-full border border-white hover:underline mb-3"
@@ -87,31 +96,22 @@ const SignupPage = () => {
                   src="/github.png"
                   alt="GitHub Icon"
                 />
-                Sign Up with GitHub
+                Log In with GitHub
               </button>
               <div className="flex items-center justify-center mt-4">
-                <p className="text-white text-g">
-                  Already have an account?{" "}
-                  <a href="/login" className="text-blue-500 hover:underline">
-                    Log in here.
+                <p className="text-white text-lg">
+                  Don't have an account?{" "}
+                  <a href="/signup" className="text-blue-500 hover:underline">
+                    Sign up here.
                   </a>
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Right Side (Background Image) */}
-        <div className="hidden lg:block bg-cover bg-center h-full ">
-          <img
-            src="../../oig1.jpeg"
-            alt=""
-            className="h-full w-full object-cover rounded-md"
-          />
-        </div>
       </div>
     </div>
   );
 };
 
-export default SignupPage;
+export default LoginPage;
