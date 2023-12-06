@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   GithubAuthProvider,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../Firebase/firebaseConfig";
 
@@ -51,10 +52,27 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const emailPasswordLogin = async (email, password) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      setUser(result.user);
+      localStorage.setItem("user", JSON.stringify(result.user));
+    } catch (error) {
+      console.error("Error logging in with email/password:", error.message);
+    }
+  };
+
   const logOut = () => {
-    signOut(auth);
-    setUser(null);
-    localStorage.removeItem("user");
+    console.log("Logging out...");
+    signOut(auth)
+      .then(() => {
+        console.log("Sign out successful");
+        setUser(null);
+        localStorage.removeItem("user");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error.message);
+      });
   };
 
   useEffect(() => {
@@ -71,7 +89,14 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, googleSignIn, githubSignIn, emailPasswordSignUp, logOut }}
+      value={{
+        user,
+        googleSignIn,
+        githubSignIn,
+        emailPasswordSignUp,
+        logOut,
+        emailPasswordLogin,
+      }}
     >
       {children}
     </AuthContext.Provider>

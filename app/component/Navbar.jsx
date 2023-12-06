@@ -1,12 +1,24 @@
 // components/Navbar.js
 "use client";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { UserAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user, logOut } = UserAuth();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
+  };
+
+  const totallyLogOut = async () => {
+    try {
+      await logOut();
+      useRouter.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -153,14 +165,20 @@ const Navbar = () => {
                 Services
               </a>
             </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                LogOut
-              </a>
-            </li>
+            {user && (
+              <li>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    totallyLogOut();
+                  }}
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Logout
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -5,12 +5,12 @@ import { UserAuth } from "../context/AuthContext";
 import { redirect } from "next/navigation";
 
 const LoginPage = () => {
-  const { emailPasswordSignIn, googleSignIn, githubSignIn, user } = UserAuth();
+  const { emailPasswordLogin, googleSignIn, githubSignIn, user } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLoginWithEmailPassword = async () => {
-    await emailPasswordSignIn(email, password);
+    await emailPasswordLogin(email, password);
     if (user) redirect("/");
   };
 
