@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "./component/navbar";
 import NewsGrid from "./component/NewGrid";
@@ -20,7 +19,7 @@ export default function Home() {
     fetchData();
   }, []);
 
-  if (user === null) {
+  if (!user) {
     return <LoginPage />;
   }
   return (

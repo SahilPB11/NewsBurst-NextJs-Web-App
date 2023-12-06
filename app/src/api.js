@@ -14,7 +14,7 @@ export const getTopHeadlines = async () => {
   try {
     const response = await newsApi.get("/top-headlines", {
       params: {
-        country: "uk",
+        country: "us",
       },
     });
     return response.data.articles;

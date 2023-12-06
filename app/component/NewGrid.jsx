@@ -1,7 +1,29 @@
-// components/NewsGrid.js
-import React from "react";
+import React, { useState } from "react";
 
 const NewsGrid = ({ articles, onLike }) => {
+  console.log(articles);
+
+  // State to track liked articles
+  const [likedArticles, setLikedArticles] = useState([]);
+
+  // Function to handle like button click
+  const handleLikeClick = (url) => {
+    // Check if the article is already liked
+    const isLiked = likedArticles.includes(url);
+
+    // Toggle the like status
+    if (isLiked) {
+      // Unlike: Remove the article from the liked list
+      setLikedArticles(likedArticles.filter((likedUrl) => likedUrl !== url));
+    } else {
+      // Like: Add the article to the liked list
+      setLikedArticles([...likedArticles, url]);
+    }
+
+    // Call the onLike function with the updated liked status
+    onLike(url, !isLiked);
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {articles.map((article) => (
@@ -23,8 +45,12 @@ const NewsGrid = ({ articles, onLike }) => {
               Read more
             </a>
             <button
-              onClick={() => onLike(article.url)}
-              className="text-red-500 hover:text-red-700"
+              onClick={() => handleLikeClick(article.url)}
+              className={`text-${
+                likedArticles.includes(article.url) ? "white" : "red"
+              }-500 hover:text-${
+                likedArticles.includes(article.url) ? "white" : "red"
+              }-700`}
             >
               ❤️ Like
             </button>

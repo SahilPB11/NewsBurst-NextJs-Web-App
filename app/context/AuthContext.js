@@ -63,10 +63,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    console.log("Logging out...");
     signOut(auth)
       .then(() => {
-        console.log("Sign out successful");
         setUser(null);
         localStorage.removeItem("user");
       })
