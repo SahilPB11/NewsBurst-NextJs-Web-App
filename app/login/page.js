@@ -2,19 +2,22 @@
 "use client";
 import React, { useState } from "react";
 import { UserAuth } from "../context/AuthContext";
+import { redirect } from "next/navigation";
 
 const LoginPage = () => {
-  const { emailPasswordSignIn, googleSignIn, githubSignIn } = UserAuth();
+  const { emailPasswordSignIn, googleSignIn, githubSignIn, user } = UserAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLoginWithEmailPassword = () => {
-    emailPasswordSignIn(email, password);
+  const handleLoginWithEmailPassword = async () => {
+    await emailPasswordSignIn(email, password);
+    if (user) redirect("/");
   };
 
   const signInWithGoogle = async () => {
     try {
       await googleSignIn().then("successfully logged in with Google");
+      if (user) redirect("/");
     } catch (error) {
       console.log(error);
     }
@@ -23,11 +26,18 @@ const LoginPage = () => {
   const signInWithGitHub = async () => {
     try {
       await githubSignIn().then("successfully logged in with GitHub");
+      if (user) redirect("/");
     } catch (error) {
       console.log(error);
     }
   };
 
+  // if user is present in that case it will go oh ome page
+  if (user) {
+    if (user) redirect("/");
+  }
+
+  // if user is not present in that case it will show login page
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 w-full max-w-screen-xl h-full">
